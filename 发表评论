@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>发表说说</title>
+ <style type="text/css">
+  *{margin:0;padding:0;}
+  li{list-style: none;}
+  a{text-decoration: none;color:black;}
+  #wrap{
+        width:480px;height:180px;padding:10px;background: #f00;
+        margin:50px auto;border-radius: 5px;
+    }
+  #txt{
+     width:480px;height:120px;border-radius: 5px;resize:none;/* 设置文本框不能拉伸 默认是可以拉伸的*/
+    }
+  .box{
+        position:relative;float:left;width:40px;height:40px;
+        margin-top:8px;border: 1px solid #eee;padding: 3px;
+    }
+  .box img{
+        position: absolute;left:0px;top:0px;width:40px;
+        height:40px;display: none;cursor: pointer;
+    }
+  #btn{
+        float:right;margin-top:15px;width:80px;height:35px;
+        line-height: 35px;text-align: center;font-size:14px;
+        color:white;background: #f60;cursor: pointer;
+   }
+  #list{
+        width:500px;margin:0px auto;
+   }
+  #list ul li{
+  font-size: 12px;
+  border-bottom: 1px solid #f0f;
+  padding: 10px 0px;
+  }
+  #list ul li::after{
+  	content: '';
+  	display: block;
+    clear: both;
+  }
+  #list ul li p{
+        float:right;width:437px;
+    }
+  #list ul li span{
+        float:left;margin:18px 0px 0px 6px;
+    }
+  #list ul li img{
+        float:left;width:50px;height:50px;
+        border:1px solid #000;padding: 2px;
+    }
+ </style>
+</head>
+<body>
+  <div id="wrap">
+	   <textarea id='txt'></textarea>
+	   <div class="box">
+	   	<img style="display: block" src="2.jpg" alt=""><img src="2.jpg" alt="">
+	   </div>
+	   <div id="btn">发表</div>
+  </div>
+  <div id="list">
+   	<ul>
+   	</ul>
+
+ <script type="text/javascript">
+  var txt = document.getElementById('txt');
+  var btn = document.getElementById('btn');
+  var UL = document.querySelector('#list ul');
+  var oimg = document.querySelectorAll('#wrap .box img');
+  var src = oimg[0].src;//默认的图片路径
+
+ oimg[0].onclick = function(){//点击更改图标 修改默认图片路径
+ 	this.style.display ='none';
+ 	oimg[1].style.display = 'block';
+ 	src = oimg[1].src;
+ };
+ oimg[1].onclick = function(){
+ 	this.style.display = 'none';
+ 	oimg[0].style.display = 'block';
+   src = oimg[0].src;
+ }
+  function toTwo( num ) {//如果时 分 秒 小于10 就拼接上一个0，默认是不会补零的;
+            return num*1<10?"0"+num:num;
+     }
+
+ btn.onclick = function(){
+    var goudan = new Date();
+    var YY = goudan.getFullYear();
+    var MM = goudan.getMonth() + 1;
+    var DD = goudan.getDate();
+    var hh = goudan.getHours();
+    var mm = goudan.getMinutes();
+    var ss = goudan.getSeconds();
+    var day = goudan.getDay();
+	if(txt.value){//判断文本框有没有内容
+      var time = "发表时间："+YY+"年"+MM+"月"+DD+"号"+toTwo(hh)+'时'+toTwo(mm)+'分'+toTwo(ss)+'秒';
+      var val = txt.value;
+      txt.value = '';
+	  var oLi = document.createElement("li");
+	  oLi.innerHTML = '<img src="'+src+'"><p>'+val+'</p><span>'+time+'</span>';
+	   UL.insertBefore(oLi,UL.firstChild);
+    }else{
+        alert('内容为空,请输入一些内容');
+    }
+ };
+ </script>
+</body>
+</html>
+
